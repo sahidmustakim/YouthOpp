@@ -15,7 +15,8 @@ const AuthProvider = (props) => {
                 setIsLoggedIn: setIsLoggedIn,
             }}
         >
-            {props.children}
+        {props.children}
+
         </AuthContext.Provider>
     );
 };
