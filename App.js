@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import Signin from './src/screens/Signin';
 import { AuthContext, AuthProvider } from './src/providers/AuthProvider';
 import Home from './src/screens/Home';
+import Post from './src/screens/Post';
+
 
 const authStack = createStackNavigator()
 const homeStack = createStackNavigator()
@@ -13,7 +15,8 @@ const homeStack = createStackNavigator()
 const HomeStack = () => {
   return (
     <homeStack.Navigator initialRouteName='Home'>
-      <homeStack.Screen name="Home" component={Home} />
+      <homeStack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <homeStack.Screen name="Post" component={Post} options={{ headerShown: false }}/>
     </homeStack.Navigator>
   )
 }
