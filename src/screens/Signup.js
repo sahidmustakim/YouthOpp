@@ -9,8 +9,6 @@ import { AuthContext } from '../providers/AuthProvider';
 
 const Signup = ({ navigation }) => {
 
-
-
     const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
@@ -119,6 +117,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#f09053',
         justifyContent: 'center'
+    },
+    postButton: {
+        backgroundColor: '#f09053',
+        padding: 10,
+        borderRadius: 5,
+        width: 200,
+        alignItems: 'center',
+        marginTop: 10
     }
 });
 
