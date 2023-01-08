@@ -13,12 +13,9 @@ const Signin = ({ navigation }) => {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Signed in 
                 const user = userCredential.user;
                 authcontext.setIsLoggedIn(true)
                 authcontext.setCurrentUser(userCredential.user)
-
-                // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -32,16 +29,14 @@ const Signin = ({ navigation }) => {
         const auth = getAuth();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
-                // The signed-in user info.
                 const user = result.user;
-                console.log(user) 
+                // console.log(user) 
 
                 authcontext.setIsLoggedIn(true)
                 authcontext.setCurrentUser(user)
-                // ...
+
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -51,7 +46,6 @@ const Signin = ({ navigation }) => {
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 alert(errorMessage)
-                // ...
             });
     }
 
@@ -66,9 +60,6 @@ const Signin = ({ navigation }) => {
                         <Card.Title>Sign In</Card.Title>
                         <Input style={styles.input} placeholder=" Enter your email" onChangeText={setEmail} />
                         <Input style={styles.input} placeholder=" Enter your password" onChangeText={setPassword} secureTextEntry={true} />
-                        {
-                            console.log(authcontext.isLoggedIn)
-                        }
                         <TouchableOpacity style={styles.signInButton} onPress={() => { onSubmit(authcontext) }}>
                             <Text>Sign In</Text>
                         </TouchableOpacity>
@@ -128,16 +119,6 @@ const styles = StyleSheet.create({
     signUpButton: {
         color: '#f09053'
     },
-    bottomLine: {
-        color: '#f09053',
-        marginTop: 10,
-        fontSize: 10,
-        textAlign: 'center',
-        fontSize: '10px',
-        fontFamily: 'roboto',
-        fontStyle: 'italic'
-    }
-
 });
 
 export default Signin;

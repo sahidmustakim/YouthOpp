@@ -8,7 +8,6 @@ import { AuthContext, AuthProvider } from './src/providers/AuthProvider';
 import Home from './src/screens/Home';
 import Post from './src/screens/Post';
 
-
 const authStack = createStackNavigator()
 const homeStack = createStackNavigator()
 
@@ -30,8 +29,6 @@ const AuthStack = () => {
     </authStack.Navigator>
   )
 }
-
-
 
 export default function App() {
   return (

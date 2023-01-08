@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React, { useState } from 'react';
 import { Card, Input } from '@rneui/themed'
 import { db } from '../firebase/firebase';
@@ -17,10 +17,7 @@ const Signup = ({ navigation }) => {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
-                // Signed in 
                 const uid = userCredential.user.uid;
-
-                // add 2 db
                 try {
                     const hashPassword = atob(password)
                     const docRef = await addDoc(collection(db, "users"), {
@@ -37,14 +34,11 @@ const Signup = ({ navigation }) => {
                 } catch (e) {
                     alert("Error adding document: ", e);
                 }
-                // ...
-
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert(errorMessage)
-                // ..
             });
     }
 
@@ -118,14 +112,6 @@ const styles = StyleSheet.create({
         borderColor: '#f09053',
         justifyContent: 'center'
     },
-    postButton: {
-        backgroundColor: '#f09053',
-        padding: 10,
-        borderRadius: 5,
-        width: 200,
-        alignItems: 'center',
-        marginTop: 10
-    }
 });
 
 export default Signup;
