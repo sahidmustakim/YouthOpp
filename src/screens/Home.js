@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center',
         fontFamily: 'serif',
-        marginVertical: 10,
+        flex: 1,
+        justifyContent: 'center',
     },
 })
 
