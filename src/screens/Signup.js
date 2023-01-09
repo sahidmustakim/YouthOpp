@@ -1,4 +1,5 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { TextInput } from "@react-native-material/core";
 import React, { useState } from 'react';
 import { Card, Input } from '@rneui/themed'
 import { db } from '../firebase/firebase';
@@ -9,8 +10,6 @@ import { AuthContext } from '../providers/AuthProvider';
 
 const Signup = ({ navigation }) => {
 
-
-
     const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
@@ -19,10 +18,7 @@ const Signup = ({ navigation }) => {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
-                // Signed in 
                 const uid = userCredential.user.uid;
-
-                // add 2 db
                 try {
                     const hashPassword = atob(password)
                     const docRef = await addDoc(collection(db, "users"), {
@@ -39,30 +35,26 @@ const Signup = ({ navigation }) => {
                 } catch (e) {
                     alert("Error adding document: ", e);
                 }
-                // ...
-
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert(errorMessage)
-                // ..
             });
     }
-
 
     return (
         <AuthContext.Consumer>
             {(authcontext) => (
                 <View style={styles.container}>
-                    <Image source={require('../../assets/opportunity.png')} style={styles.logo} />
                     <Card style={styles.card}>
-                        <Card.Title>Sign Up</Card.Title>
-                        <Input style={styles.input} placeholder=" Enter your name" onChangeText={setName} />
-                        <Input style={styles.input} placeholder=" Enter your email" onChangeText={setEmail} />
-                        <Input style={styles.input} placeholder=" Enter your password" secureTextEntry={true} onChangeText={setPassword} />
+                        <Card.Title style={styles.cardTitle}>Sign Up</Card.Title>
+                        <Card.Divider />
+                        <TextInput label='Name'  variant="outlined" value={name} onChangeText={setName} dense />
+                        <TextInput label='Email' variant="outlined" value={email} onChangeText={setEmail} dense style={styles.input}/>
+                        <TextInput label='Password' variant="outlined" value={password} onChangeText={setPassword} dense style={styles.input}/>
                         <TouchableOpacity style={styles.button} onPress={() => { onSubmit(authcontext) }}>
-                            <Text>Signup</Text>
+                            <Text style={styles.buttonText}>Signup</Text>
                         </TouchableOpacity>
                         <View style={styles.secondView}>
                             <Text>Already have an account?</Text>
@@ -82,43 +74,61 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#0f102d'
+        backgroundColor: '#dbd9de'
+    },
+    cardTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#7605ff',
+        textAlign: 'center',
+        marginBottom: 10,
+        fontFamily: 'serif'
     },
     input: {
-        borderColor: '#0f102d'
+        marginTop: 15,
     },
     button: {
-        backgroundColor: '#f09053',
+        backgroundColor: '#7605ff',
         padding: 10,
         borderRadius: 5,
         width: 200,
-        alignItems: 'center'
-    },
-    card: {
-        backgroundColor: '#f09053',
-        padding: 10,
-        borderColor: '#f09053',
-        borderWidth: 1,
-        borderRadius: 5
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        color: 'white',
+        fontFamily: 'serif',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 12.35
     },
     secondView: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 8
+        marginTop: 8,
+        marginBottom: 8,
+        marginLeft: 10,
+        marginRight: 10,
     },
     signInButton: {
-        color: '#f09053',
-        marginLeft: 5
+        color: '#7605ff',
+        fontFamily: 'erif',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
-    logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: '#f09053',
-        justifyContent: 'center'
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
     }
 });
 

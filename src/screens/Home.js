@@ -1,36 +1,64 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useEffect } from 'react'
 import { AuthContext } from '../providers/AuthProvider'
-import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase';
-import { Button } from '@rneui/base';
-import { getAuth, signOut } from 'firebase/auth';
-
+import { useState } from 'react';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import PostCard from '../components/PostCard';
+import HomeBar from '../components/HomeBar';
+import { StyleSheet } from 'react-native';
+import { Card, Divider } from 'react-native-elements';
+import { Text } from 'react-native-web';
 
 const Home = (props) => {
 
-    const logOut = (authcontext) => {
-        const auth = getAuth()
-        signOut(auth)
-            .then(res => {
-                alert('Signed Out')
-                authcontext.setIsLoggedIn(false)
-                authcontext.setCurrentUser(null)
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+        const q = query(collection(db, 'posts'))
+        const querySnapshot = getDocs(q)
+        querySnapshot.then((querySnapshot) => {
+            const posts = []
+            querySnapshot.forEach((doc) => {
+                posts.push(doc.data())
             })
-            .catch(err => {
-                alert(err.message)
-            })
+            setPosts(posts)
+        })
+    }, [posts])
+
+
+    const renderPosts = () => {
+        return posts.map((post) => {
+            return (
+                <PostCard post={post} />
+            )
+        })
     }
+
+    const homeBar = () => {
+        return (
+            <HomeBar navigation={props.navigation} />
+        )
+    }
+
 
     return (
         <AuthContext.Consumer>
             {
                 (auth) => (
-                    <View style = {styles.container}>
-                        <Text  style ={styles.userInfo}>{auth.currentUser.name}</Text>
-                        <Text  style ={styles.userInfo}>{auth.currentUser.email}</Text>
-                        <Button style = {styles.logOutButton} title='Post' onPress={() => props.navigation.navigate('Post')} />
-                        <Button style = {styles.logOutButton} title='Logout' onPress={() => logOut(auth)} /> 
+                    <View style={styles.container}>
+
+                        {
+                            homeBar()
+                        }
+                        <Divider style={styles.Divider} />
+                        <Text style={styles.appName}>Youth Opportunity</Text>
+                        <Text style={styles.slogan}>Unleashing the boundless potential of the next generation</Text>
+
+                        <View>
+                            {
+                                renderPosts()
+                            }
+                        </View>
                     </View>
                 )
             }
@@ -38,26 +66,37 @@ const Home = (props) => {
     )
 }
 
-const styles = {
+
+
+
+const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#0f102d'
+        backgroundColor: '#dbd9de',
     },
-    userInfo: {
-        fontSize: 20,
+    Divider: {
+        backgroundColor: '#7605ff',
+        height: 5,
+    },
+    divider: {
+        height: 1,
+        width: '20%',
+        backgroundColor: '#7605ff'
+    },
+    appName: {
+        fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#f09053'
+        marginVertical: 10,
+        alignSelf: 'center',
+        fontFamily: 'serif',
     },
-    logOutButton: {
-        backgroundColor: '#f09053',
-        padding: 10,
-        borderRadius: 5,
-        width: 200,
-        alignItems: 'center'
-    }
+    slogan: {
+        fontSize: 18,
+        marginBottom: 10,
+        alignSelf: 'center',
+        fontFamily: 'serif',
+        marginVertical: 10,
+    },
+})
 
-}
 export default Home
