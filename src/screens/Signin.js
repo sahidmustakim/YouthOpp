@@ -1,8 +1,9 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React, { useState } from 'react';
 import { Card, Input } from '@rneui/themed'
 import { AuthContext } from '../providers/AuthProvider';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import { TextInput } from "@react-native-material/core";
 
 const Signin = ({ navigation }) => {
 
@@ -55,13 +56,15 @@ const Signin = ({ navigation }) => {
         <AuthContext.Consumer>
             {(authcontext) => (
                 <View style={styles.container}>
-                    <Image source={require('../../assets/opportunity.png')} style={styles.logo}/>
-                    <Card style={styles.card}>
-                        <Card.Title>Sign In</Card.Title>
-                        <Input style={styles.input} placeholder=" Enter your email" onChangeText={setEmail} />
-                        <Input style={styles.input} placeholder=" Enter your password" onChangeText={setPassword} secureTextEntry={true} />
+                    <Card>
+                        <Card.Title style={styles.cardTitle} >Sign In</Card.Title>
+                        <Card.Divider />
+                        <TextInput label = "Email" variant="outlined" value={email} onChangeText={setEmail} dense />
+                        <TextInput label = "Password"  variant="outlined" value={password} onChangeText={setPassword} secureTextEntry={true} dense style={styles.input}/>
+                        {/* <Input style={styles.input} placeholder=" Enter your email" onChangeText={setEmail} /> */}
+                        {/* <Input style={styles.input} placeholder=" Enter your password" onChangeText={setPassword} secureTextEntry={true} /> */}
                         <TouchableOpacity style={styles.signInButton} onPress={() => { onSubmit(authcontext) }}>
-                            <Text>Sign In</Text>
+                            <Text style={styles.signInButtonText}>Sign In</Text>
                         </TouchableOpacity>
                         <View style={styles.secondView}>
                             <Text>Don't have an account?</Text>
@@ -77,48 +80,66 @@ const Signin = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    card:{
-        width: 300,
-        height: 300,
-        backgroundColor: '#f09053',
-        padding: 10,
-        borderRadius: 5
-    },
     container: {
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#0f102d'
+        backgroundColor: '#dbd9de'
     },
-    logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: '#f09053',
-        justifyContent: 'center'
+    cardTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#7605ff',
+        textAlign: 'center',
+        marginBottom: 10,
+        fontFamily: 'serif'
     },
     input: {
-        width: 200,
-        height: 40
+       marginTop: 15,
     },
     signInButton: {
-        backgroundColor: '#f09053',
+        backgroundColor: '#7605ff',
         padding: 10,
         borderRadius: 5,
         width: 200,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        color: 'white',
+        fontFamily: 'serif',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 9,
+        },
+        shadowOpacity: 0.50,
+        shadowRadius: 12.35
     },
     secondView: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 8
+        marginTop: 8,
+        marginBottom: 8,
+        marginLeft: 10,
+        marginRight: 10,
     },
     signUpButton: {
-        color: '#f09053'
+        color: '#7605ff',
+        fontFamily: 'erif',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
+    signInButtonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
 });
 
 export default Signin;

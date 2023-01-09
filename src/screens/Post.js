@@ -5,6 +5,7 @@ import { AuthContext } from '../providers/AuthProvider';
 import { db } from '../firebase/firebase';
 import { collection, addDoc } from "firebase/firestore";
 import { Picker } from 'react-native-web';
+import { Divider } from "@react-native-material/core";
 
 const Post = (props) => {
   const [title, setTitle] = useState('');
@@ -55,7 +56,7 @@ const Post = (props) => {
             <View style={styles.titleContainer}>
               <TouchableOpacity onPress={goToHome}>
                 <Image
-                  source={require('../../assets/opportunity.png')}
+                  source={require('../../assets/homeicon.png')}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -65,21 +66,22 @@ const Post = (props) => {
               </View>
             </View>
             <View style={styles.spacer} />
-            <View style={styles.divider} />
+            <Divider style={styles.divider} />
             <View style={styles.spacer} />
             <Input style={styles.input} placeholder="Title" onChangeText={setTitle} />
             <Input style={styles.input} placeholder="Description" onChangeText={setDescription} />
-            <Picker style={styles.picker} selectedValue={type} onValueChange={(itemValue, itemIndex) => setType(itemValue)}>
-              <Picker.Item label="None" value="Type" />
-              <Picker.Item label="Internship" value="Internship" />
-              <Picker.Item label="Competition" value="Competition" />
-              <Picker.Item label="Scholarship" value="Scholarship" />
-              <Picker.Item label="Jobs" value="Jobs" />
+            <Picker style={styles.picker} selectedValue={type} onValueChange={(itemValue, itemIndex) => setType(itemValue)} >
+              <Picker.Item label="None" value="Type" color="#000" />
+              <Picker.Item label="Internship" value="Internship" color="#000"/>
+              <Picker.Item label="Competition" value="Competition" color="#000" />
+              <Picker.Item label="Scholarship" value="Scholarship" color="#000" />
+              <Picker.Item label="Jobs" value="Jobs" color="#000" />
             </Picker>
             <Input style={styles.input} placeholder="Official Link" onChangeText={setOfficialLink} />
             <Input style={styles.input} placeholder="Representative Name" onChangeText={setName} />
             <Input style={styles.input} placeholder="Representative Mail" onChangeText={setCompanyRepresentativeMail} />
-            <View style={styles.divider} />
+            <View style={styles.spacer} />
+            <Divider style={styles.divider} />
             <View style={styles.spacer} />
             <TouchableOpacity style={styles.button} onPress={() => handleSubmit(auth)}>
               <Text style={styles.postButton}>Post</Text>
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0f102d',
+    backgroundColor: '#dbd9de',
     padding: 20,
     paddingTop: 50,
     paddingBottom: 50,
@@ -115,40 +117,50 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    fontFamily: 'serif',
+    color: 'black',
   },
   subtitle: {
     fontSize: 18,
-    color: '#fff',
+    color: 'black',
+    fontFamily: 'serif',
   },
   spacer: {
     height: 25
   },
   divider: {
-    height: 5,
+    height: 1,
     width: '100%',
-    backgroundColor: '#f09053'
+    backgroundColor: 'black'
   },
   input: {
     width: 300,
     height: 50,
-    borderWidth: 1,
-    borderColor: '#f09053',
+    borderWidth: .5,
+    borderColor: '#d4b0ff',
     borderRadius: 5,
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
     fontSize: 18,
-    borderBottomColor: '#f09053',
     alignSelf: 'flex-start',
     color: '#fff',
+    backgroundColor: 'white',
+
   },
   button: {
-    backgroundColor: '#f09053',
+    backgroundColor: '#7605ff',
     padding: 10,
     borderRadius: 5,
     width: 200,
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.50,
+    shadowRadius: 12.35
   },
   postButton: {
     color: '#fff',
@@ -159,14 +171,14 @@ const styles = StyleSheet.create({
     width: 300,
     height: 50,
     borderWidth: 1,
-    borderColor: '#f09053',
-    color: '#fff',
-    backgroundColor: '#0f102d',
+    borderColor: '#d4b0ff',
+    color: 'black',
+    backgroundColor: 'white',
     paddingLeft: 10,
     fontSize: 18,
     borderRadius: 5,
     marginBottom: 10,
-  }
+  },
 });
 
 export default Post;
