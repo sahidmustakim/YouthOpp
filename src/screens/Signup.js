@@ -1,6 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { TextInput } from "@react-native-material/core";
 import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { TextInput } from "@react-native-material/core";
 import { Card, Input } from '@rneui/themed'
 import { db } from '../firebase/firebase';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -13,46 +13,56 @@ const Signup = ({ navigation }) => {
     const [name, setName] = useState()
     const [password, setPassword] = useState()
     const [email, setEmail] = useState()
+    const [confirmPassword, setConfirmPassword] = useState()
 
     const onSubmit = async (authcontext) => {
+
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(async (userCredential) => {
-                const uid = userCredential.user.uid;
-                try {
-                    const hashPassword = atob(password)
-                    const docRef = await addDoc(collection(db, "users"), {
-                        name,
-                        email,
-                        hashPassword,
-                        uid
-                    });
-                    console.log("Document written with ID: ", docRef.id);
-                    setName('')
-                    setEmail('')
-                    setPassword('')
-                    navigation.navigate("Signin")
-                } catch (e) {
-                    alert("Error adding document: ", e);
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(errorMessage)
-            });
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match")
+            return
+        } else {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(async (userCredential) => {
+                    const uid = userCredential.user.uid;
+                    try {
+                        const hashPassword = atob(password)
+                        const docRef = await addDoc(collection(db, "users"), {
+                            name,
+                            email,
+                            hashPassword,
+                            uid
+                        });
+                        console.log("Document written with ID: ", docRef.id);
+                        setName('')
+                        setEmail('')
+                        setPassword('')
+                        navigation.navigate("Signin")
+                    } catch (e) {
+                        alert("Error adding document: ", e);
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage)
+                });
+        }
     }
 
     return (
         <AuthContext.Consumer>
             {(authcontext) => (
-                <View style={styles.container}>
+
+                <SafeAreaView style={styles.container}>
                     <Card style={styles.card}>
                         <Card.Title style={styles.cardTitle}>Sign Up</Card.Title>
                         <Card.Divider />
-                        <TextInput label='Name'  variant="outlined" value={name} onChangeText={setName} dense />
-                        <TextInput label='Email' variant="outlined" value={email} onChangeText={setEmail} dense style={styles.input}/>
-                        <TextInput label='Password' variant="outlined" value={password} onChangeText={setPassword} dense style={styles.input}/>
+                        <TextInput label='Name' variant="outlined" value={name} onChangeText={setName} dense />
+                        <TextInput label='Email' variant="outlined" value={email} onChangeText={setEmail} dense style={styles.input} />
+                        <TextInput label='Password' variant="outlined" value={password} onChangeText={setPassword} dense style={styles.input} secureTextEntry={true} />
+                        <TextInput label='Confirm Password' variant="outlined" value={confirmPassword} onChangeText={setConfirmPassword} dense style={styles.input} />
                         <TouchableOpacity style={styles.button} onPress={() => { onSubmit(authcontext) }}>
                             <Text style={styles.buttonText}>Signup</Text>
                         </TouchableOpacity>
@@ -63,7 +73,8 @@ const Signup = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </Card>
-                </View>
+                </SafeAreaView>
+                
             )}
         </AuthContext.Consumer>
     );
@@ -74,7 +85,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#dbd9de'
+        backgroundColor: '#e6e7e8'
     },
     cardTitle: {
         fontSize: 20,

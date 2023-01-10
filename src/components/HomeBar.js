@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native'
 import { AuthContext } from '../providers/AuthProvider'
 import { getAuth, signOut } from 'firebase/auth';
-import { AppBar } from '@react-native-material/core';
 
 
 const HomeBar = (props) => {
+
     const logOut = (authcontext) => {
         const auth = getAuth()
         signOut(auth)
@@ -18,33 +18,35 @@ const HomeBar = (props) => {
                 alert(err.message)
             })
     }
+
     return (
         <AuthContext.Consumer>
             {
                 (auth) => (
 
-                    <View style={styles.header}>
+                    <SafeAreaView style={styles.header}>
                         <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
                             <Image
                                 source={require('../../assets/homeicon.png')}
-                                style={styles.image}
+                                style={styles.homeIcon}
                             />
                         </TouchableOpacity>
-                        <View style={styles.buttons}>
+                        <SafeAreaView style={styles.buttons}>
                             <TouchableOpacity onPress={() => props.navigation.navigate('Post')}>
                                 <Image
                                     source={require('../../assets/posticon.png')}
-                                    style={styles.image2}
+                                    style={styles.postIcon}
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => logOut(auth)}>
                                 <Image
                                     source={require('../../assets/logouticon.png')}
-                                    style={styles.image}
+                                    style={styles.logOutIcon}
                                 />
                             </TouchableOpacity>
-                        </View>
-                    </View>
+                        </SafeAreaView>
+                    </SafeAreaView>
+
 
                 )
             }
@@ -59,16 +61,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
     buttons: {
         flexDirection: 'row',
-    },
-    image: {
-        height: 40,
-        width: 40,
-        marginRight: 10,
-        marginBottom: 5,
-        marginTop: 5,
     },
     opportunitiesText: {
         fontSize: 20,
@@ -77,12 +74,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'serif',
     },
-    image2: {
+    homeIcon: {
+        height: 38,
+        width: 38,
+        marginLeft: 10,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    postIcon: {
         height: 35,
         width: 35,
+        marginTop: 15,
+        marginBottom: 10
+    },
+    logOutIcon: {
+        height: 43,
+        width: 43,
         marginRight: 10,
-        marginBottom: 5,
-        marginTop: 5,
+        marginTop: 10,
+        marginBottom: 10
     },
 })
 

@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import { Card, Input } from '@rneui/themed'
 import { AuthContext } from '../providers/AuthProvider';
 import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import { TextInput } from "@react-native-material/core";
+
 
 const Signin = ({ navigation }) => {
 
@@ -55,14 +56,12 @@ const Signin = ({ navigation }) => {
     return (
         <AuthContext.Consumer>
             {(authcontext) => (
-                <View style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     <Card>
                         <Card.Title style={styles.cardTitle} >Sign In</Card.Title>
                         <Card.Divider />
                         <TextInput label = "Email" variant="outlined" value={email} onChangeText={setEmail} dense />
                         <TextInput label = "Password"  variant="outlined" value={password} onChangeText={setPassword} secureTextEntry={true} dense style={styles.input}/>
-                        {/* <Input style={styles.input} placeholder=" Enter your email" onChangeText={setEmail} /> */}
-                        {/* <Input style={styles.input} placeholder=" Enter your password" onChangeText={setPassword} secureTextEntry={true} /> */}
                         <TouchableOpacity style={styles.signInButton} onPress={() => { onSubmit(authcontext) }}>
                             <Text style={styles.signInButtonText}>Sign In</Text>
                         </TouchableOpacity>
@@ -73,7 +72,7 @@ const Signin = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </Card>
-                </View>
+                </SafeAreaView>
             )}
         </AuthContext.Consumer>
     );
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#dbd9de'
+        backgroundColor: '#e6e7e8'
     },
     cardTitle: {
         fontSize: 20,
