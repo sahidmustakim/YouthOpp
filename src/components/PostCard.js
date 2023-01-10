@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, Linking, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Linking, Modal, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Card } from '@rneui/themed';
 
 const PostCard = (props) => {
+
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <Card style={styles.card}>
+
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <View style={styles.cardContainer}>
+                <SafeAreaView style={styles.cardContainer}>
                     <Image
                         source={require('../../assets/cardOpp.png')}
                         style={styles.image}
@@ -17,15 +19,16 @@ const PostCard = (props) => {
                         <Text style={styles.title}>{props.post.title}</Text>
                         <Text style={styles.type}>{props.post.type}</Text>
                     </View>
-                </View>
+                </SafeAreaView>
             </TouchableOpacity>
+
             <Modal
                 animationType="slide"
                 transparent={false}
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}
             >
-                <View style={styles.modalContainer}>
+                <SafeAreaView style={styles.modalContainer}>
                     <Card>
                         <Image
                             source={require('../../assets/cardOpp.png')}
@@ -43,11 +46,12 @@ const PostCard = (props) => {
                             <Text style={[styles.innerLink, styles.button]}>Official Link</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setModalVisible(false)}>
-                            <Text style={[styles.closeButton,styles.button]}>Close</Text>
+                            <Text style={[styles.closeButton, styles.button]}>Close</Text>
                         </TouchableOpacity>
                     </Card>
-                </View>
+                </SafeAreaView>
             </Modal>
+            
         </Card>
     );
 };
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'serif',
     },
-    button:{
+    button: {
         backgroundColor: '#7605ff',
         marginTop: 20,
         borderColor: '#7605ff',
@@ -110,9 +114,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         textAlign: 'center',
         flex: 1,
-        color: 'white',
-        fontWeight: 'bold',
-        fontFamily: 'serif', 
+        color: '#fff',
+        fontFamily: 'serif',
     },
     innerLink: {
         padding: 8,
@@ -124,6 +127,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.50,
         shadowRadius: 5.35,
         fontSize: 14,
+        fontWeight: 'bold',
     },
     closeButton: {
         padding: 10,

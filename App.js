@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Signup from './src/screens/Signup';
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import Signin from './src/screens/Signin';
 import { AuthContext, AuthProvider } from './src/providers/AuthProvider';
+
+import Signup from './src/screens/Signup';
+import Signin from './src/screens/Signin';
 import Home from './src/screens/Home';
 import Post from './src/screens/Post';
+
 
 const authStack = createStackNavigator()
 const homeStack = createStackNavigator()
@@ -48,11 +48,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

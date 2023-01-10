@@ -1,14 +1,14 @@
-import { View } from 'react-native'
-import React, { useEffect } from 'react'
-import { AuthContext } from '../providers/AuthProvider'
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, Text,SafeAreaView } from 'react-native'
+import { Divider } from '@react-native-material/core';
+import { Card } from 'react-native-elements';
 import { db } from '../firebase/firebase';
-import { useState } from 'react';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, getDocs } from "firebase/firestore";
+
+
 import PostCard from '../components/PostCard';
 import HomeBar from '../components/HomeBar';
-import { StyleSheet } from 'react-native';
-import { Card, Divider } from 'react-native-elements';
-import { Text } from 'react-native-web';
+import { AuthContext } from '../providers/AuthProvider'
 
 const Home = (props) => {
 
@@ -45,21 +45,24 @@ const Home = (props) => {
         <AuthContext.Consumer>
             {
                 (auth) => (
-                    <View style={styles.container}>
+                    <SafeAreaView style={styles.container}>
 
                         {
                             homeBar()
                         }
-                        <Divider style={styles.Divider} />
-                        <Text style={styles.appName}>Youth Opportunity</Text>
-                        <Text style={styles.slogan}>Unleashing the boundless potential of the next generation</Text>
-
+                        <Divider style={styles.divider} />
+                        <Card>
+                            <Text style={styles.appName}>Youth Opportunity</Text>
+                            <Card.Divider />
+                            <Text style={styles.slogan}>Unleashing the boundless potential of the next generation.</Text>
+                        </Card>
+                        
                         <View>
                             {
                                 renderPosts()
                             }
                         </View>
-                    </View>
+                    </SafeAreaView>
                 )
             }
         </AuthContext.Consumer>
@@ -72,31 +75,25 @@ const Home = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#dbd9de',
-    },
-    Divider: {
-        backgroundColor: '#7605ff',
-        height: 5,
+        backgroundColor: '#e6e7e8',
     },
     divider: {
+        backgroundColor: '#7605ff',
         height: 1,
-        width: '20%',
-        backgroundColor: '#7605ff'
     },
     appName: {
         fontSize: 24,
         fontWeight: 'bold',
         marginVertical: 10,
         alignSelf: 'center',
-        fontFamily: 'serif',
+        fontFamily: 'Cochin',
     },
     slogan: {
-        fontSize: 18,
-        marginBottom: 10,
-        alignSelf: 'center',
-        fontFamily: 'serif',
         flex: 1,
+        fontSize: 18,
+        fontFamily: 'Cochin',
         justifyContent: 'center',
+        alignItems: 'center',
     },
 })
 
