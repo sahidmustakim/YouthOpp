@@ -1,5 +1,17 @@
 # YouthOpp
 
+Before beginning to run the project, the following dependencies need to be installed and set up on your development environment:
+
+Node.js: Node.js is a JavaScript runtime that is used to run JavaScript on the server side. You can download the latest version of Node.js from the official website (https://nodejs.org/) and follow the installation instructions for your operating system.
+
+Git: Git is a version control system that is used to manage the code for the project. It can be downloaded from the official website (https://git-scm.com/) and installed on your system.
+
+Expo CLI: Expo is a set of tools and services for building, deploying, and quickly iterating on native iOS and Android apps from the same codebase. It can be installed globally by running the following command:
+
+```sh 
+npm install -g expo-cli
+```
+
 Running the project on mobile
 
 1. Open your terminal and navigate to the directory where you want to clone the project.
