@@ -26,33 +26,6 @@ const Signin = ({ navigation }) => {
             });
     }
 
-    const onSubmitWithGoogle = (authcontext) => {
-        const provider = new GoogleAuthProvider();
-        const auth = getAuth();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                // console.log(user) 
-
-                authcontext.setIsLoggedIn(true)
-                authcontext.setCurrentUser(user)
-
-            }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.customData.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                alert(errorMessage)
-            });
-    }
-
-
-
     return (
         <AuthContext.Consumer>
             {(authcontext) => (
